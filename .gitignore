@@ -155,4 +155,11 @@ sent_emails/
 data/
 
 temp.py
-.ingredients.csv
+ingredients.csv
+account.csv
+admin.csv
+person.csv
+transaction.csv
+user.csv
+
+data_db/
