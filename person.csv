@@ -1,4 +1,0 @@
-id,username,email,first_name,last_name,password,role,is_active,created_at
-b78649aeadc44b7a899926d1e212bbf7,leo,leo@leo.ru,leo,leo,$2b$12$3D1f8osq1RSDwRoj4AwO5eyPC/hkEVxr..K3BwldLYoa4ltCdhp7C,admin,1,2024-07-24 07:13:01
-8cde695273f9420698bcb45a7fbae55a,leo1,leo1@leo.ru,leo,leo,$2b$12$m7xKdBD85r2JfMjEaD.QHO6/DdsHcImBeZjA0GGzWf0DW1Cw.rOQC,user,1,2024-07-24 07:32:35
-2fbdf16d6cbc48b5a6b9b60e653dd37c,leo2,leo2@leo.ru,leo,leo,$2b$12$DTsUaYT12c/uNEoy7/NTtO1pO6AVOuAC7OsjXcxBU2yW95xFCiVIi,user,1,2024-07-24 11:07:11
