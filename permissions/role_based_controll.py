@@ -3,7 +3,6 @@ from functools import wraps
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
-
 from db.database import get_session
 from models.user import Person
 from auth.security import get_current_user
