@@ -151,7 +151,7 @@ media/
 yatube_api/posts/static/
 STATIC/
 sent_emails/
-#migration/
+migration/
 data/
 
 temp.py

@@ -27,18 +27,3 @@ def check_is_admin(func):
             *args, current_user=current_user, session=session, **kwargs
         )
     return wrapper
-
-
-# def check_is_admin_permission(required_roles: tuple[str]):
-#     def decorator(func):
-#         @wraps(func)
-#         async def wrapper(current_user: dict = Depends(get_user_from_token), *args, **kwargs):
-#             if current_user.get("role") not in required_roles:
-#                 raise HTTPException(
-#                     status_code=status.HTTP_403_FORBIDDEN,
-#                     detail="Insufficient permissions",
-#                     headers={"WWW-Authenticate": "Bearer"}
-#                 )
-#             return await func(current_user, *args, **kwargs)
-#         return wrapper
-#     return decorator

@@ -43,12 +43,13 @@ async def index():
     return "Payment system"
 
 
-# async def startup_event():
-#     await init_models()
+# Для запуска в контейнере Docker
+async def startup_event():
+    await init_models()
 
-# app.add_event_handler("startup", startup_event)
+app.add_event_handler("startup", startup_event)
 
-
-if __name__ == "__main__":
-    asyncio.run(init_models())
-    uvicorn.run(app="main:app", host="127.0.0.1", port=8000, reload=True)
+# для запуска без контейнера Docker
+# if __name__ == "__main__":
+#     asyncio.run(init_models())
+#     uvicorn.run(app="main:app", host="127.0.0.1", port=8000, reload=True)

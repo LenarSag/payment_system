@@ -64,7 +64,7 @@
 
 Клонировать репозиторий и перейти в него в командной строке: 
 ```
-git clone git@github.com:LenarSag/foodgram_fastapi.git
+git clone git@github.com:LenarSag/payment_system.git
 ```
 Cоздать и активировать виртуальное окружение: 
 ```
@@ -92,73 +92,50 @@ pip install -r requirements.txt
 Выполнить миграции:
 
 
-Подключаем и настраиваем алембик:
-
-```
-alembic init migration
-```
-
-В файле alembic.ini указываем адрес базы:
+В файле alembic.ini указываем адрес базы и данные для входа:
 
 ```
 [alembic]
 ...
 sqlalchemy.url = postgresql+asyncpg://postgres:postgres@localhost:5432/postgres
 ```
-
-В файле migration/env.py импортируем все модели и указываем target_metadata:
-
-```
-from models.user import Base
-
-target_metadata = Base.metadata
-```
-
-После этого:
-
-```
-alembic revision --autogenerate -m 'initial'
-```
-```
-alembic revision -m "insert initial values"
-```
-Затем в папке migration заменяем upgrade и downgrade на этот код
-
-```
-def upgrade() -> None:
-    # Insert test users into the person table and get their IDs
-    person1_id = str(uuid.uuid4())
-    person2_id = str(uuid.uuid4())
-
-    op.execute(f"""
-    INSERT INTO person (id, username, email, first_name, last_name, password, is_active, role, created_at)
-    VALUES
-    ('{person1_id}', 'testuser1', 'testuser1@test.com', 'Test', 'User1', '$2b$12$3D1f8osq1RSDwRoj4AwO5eyPC/hkEVxr..K3BwldLYoa4ltCdhp7C', true, 'user', NOW()),
-    ('{person2_id}', 'testuser2', 'testuser2@test.com', 'Test', 'User2', '$2b$12$3D1f8osq1RSDwRoj4AwO5eyPC/hkEVxr..K3BwldLYoa4ltCdhp7C', true, 'admin', NOW());
-    """)
-
-    # Insert the corresponding records into the user and admin tables
-    op.execute(f"""
-    INSERT INTO "user" (person_id) VALUES ('{person1_id}');
-    """)
-    op.execute(f"""
-    INSERT INTO "admin" (person_id) VALUES ('{person2_id}');
-    """)
-
-
-def downgrade() -> None:
-    # Delete the inserted records
-    op.execute("""
-    DELETE FROM "user" WHERE person_id IN (SELECT id FROM person WHERE username IN ('testuser1'));
-    DELETE FROM "admin" WHERE person_id IN (SELECT id FROM person WHERE username IN ('testuser2'));
-    DELETE FROM person WHERE username IN ('testuser1', 'testuser2');
-    """)
-```
-Потом создаем миграции
+Затем запускаем команду
 
 ```
 alembic upgrade head
 ```
 
+Для запуска без Docker в main.py должен быть расскомментирован этот код
+
+```
+if __name__ == "__main__":
+    asyncio.run(init_models())
+    uvicorn.run(app="main:app", host="127.0.0.1", port=8000, reload=True)
+```
+Запуск:
+
+```
+python main.py
+```
+
+Для запуска c Docker в main.py должен быть расскомментирован этот код:
+
+```
+async def startup_event():
+    await init_models()
+app.add_event_handler("startup", startup_event)
+```
+
+Затем:
+
+```
+docker compose up --build
+```
+
+Из папки с проектом запустить команду bash:
+
+```
+docker exec -it  payment_system-web-1 alembic upgrade head
+```
 
 Пароли для получения JWT токена Q16werty!23
